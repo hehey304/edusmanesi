@@ -1,12 +1,1080 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mengenal ITB — Institut Teknologi Bandung</title>
+  <meta name="description" content="Kenali Institut Teknologi Bandung: sejarah, fakultas, kampus, dan kehidupan mahasiswa." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy-900: #020b1f;
+      --navy-800: #061634;
+      --navy-700: #0a2150;
+      --blue-600: #1450c8;
+      --blue-500: #1f6bff;
+      --blue-400: #4d94ff;
+      --sky-300: #8cc2ff;
+      --sky-100: #e3f0ff;
+      --white: #ffffff;
+      --muted: #9fb3d6;
+      --line: rgba(140, 194, 255, 0.18);
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Inter", system-ui, sans-serif;
+      background: var(--navy-900);
+      color: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4, .brand, nav a, .btn, .eyebrow { font-family: "Montserrat", sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; }
+    .container { width: min(1200px, 100% - 32px); margin-inline: auto; }
+
+    /* ---------- NAV ---------- */
+    header {
+      position: fixed; inset: 0 0 auto 0; z-index: 50;
+      transition: background .3s, backdrop-filter .3s, border-color .3s;
+      border-bottom: 1px solid transparent;
+    }
+    header.scrolled {
+      background: rgba(2, 11, 31, .78);
+      backdrop-filter: blur(14px);
+      border-color: var(--line);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 80px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .08em; font-size: 15px; }
+    .brand-mark {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, var(--sky-300), var(--blue-600) 60%, var(--navy-700));
+      display: grid; place-items: center; box-shadow: 0 0 24px rgba(31,107,255,.55);
+    }
+    .brand-mark span { width: 12px; height: 12px; border-radius: 50%; background: var(--white); }
+    .brand b { font-weight: 800; }
+    .brand em { font-style: normal; font-weight: 400; color: var(--sky-300); }
+    nav ul { display: flex; gap: 38px; list-style: none; }
+    nav a { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; position: relative; padding: 6px 0; color: #dbe7ff; }
+    nav a::after { content: ""; position: absolute; left: 0; bottom: 0; width: 0; height: 2px; background: var(--blue-400); transition: width .3s; }
+    nav a:hover::after, nav a.active::after { width: 100%; }
+    .burger { display: none; background: none; border: 0; cursor: pointer; width: 40px; height: 40px; }
+    .burger span { display: block; width: 24px; height: 2px; background: #fff; margin: 5px auto; transition: .3s; }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      position: relative; min-height: 100vh; display: flex; align-items: center;
+      background:
+        radial-gradient(800px 600px at 78% 45%, rgba(31,107,255,.28), transparent 60%),
+        radial-gradient(600px 400px at 10% 90%, rgba(20,80,200,.18), transparent 60%),
+        var(--navy-900);
+      overflow: hidden; padding-top: 80px;
+    }
+    .hero::before {
+      content: ""; position: absolute; inset: 0;
+      background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 64px 64px; opacity: .25;
+      mask-image: radial-gradient(ellipse at 70% 50%, #000 10%, transparent 70%);
+    }
+    .hero-grid { position: relative; display: grid; grid-template-columns: 1.05fr 1fr; align-items: center; gap: 40px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 600;
+      letter-spacing: .2em; text-transform: uppercase; color: var(--sky-300); margin-bottom: 22px;
+    }
+    .eyebrow::before { content: ""; width: 34px; height: 2px; background: var(--blue-400); }
+    .hero h1 { font-size: clamp(42px, 6.4vw, 84px); line-height: 1.02; font-weight: 700; letter-spacing: -.02em; }
+    .hero h1 .grad {
+      background: linear-gradient(90deg, var(--white), var(--sky-300) 55%, var(--blue-400));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero p.lead { margin: 26px 0 38px; max-width: 470px; color: #c8d6f0; font-size: 16px; }
+    .btn-row { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px; padding: 18px 34px; font-size: 12px; font-weight: 700;
+      letter-spacing: .16em; text-transform: uppercase; border-radius: 4px; transition: .3s; cursor: pointer; border: 0;
+    }
+    .btn-primary { background: linear-gradient(135deg, var(--blue-500), var(--blue-600)); color: #fff; box-shadow: 0 12px 30px -10px rgba(31,107,255,.8); }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 18px 40px -10px rgba(31,107,255,.95); }
+    .btn-ghost { color: #fff; border: 1px solid rgba(255,255,255,.25); }
+    .btn-ghost:hover { border-color: var(--sky-300); color: var(--sky-300); }
+
+    .hero-visual { position: relative; aspect-ratio: 1 / 1; max-width: 600px; justify-self: end; width: 100%; }
+    .hero-visual svg { width: 100%; height: 100%; overflow: visible; }
+    .float { animation: float 6s ease-in-out infinite; transform-origin: center; }
+    @keyframes float { 50% { transform: translateY(-14px); } }
+    .spin { animation: spin 40s linear infinite; transform-origin: 300px 280px; }
+    .spin-rev { animation: spin 60s linear infinite reverse; transform-origin: 300px 280px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .hero-bottom {
+      position: absolute; left: 0; right: 0; bottom: 34px;
+    }
+    .featured-label { display: flex; align-items: center; gap: 18px; font-family: "Montserrat"; font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: #dbe7ff; margin-bottom: 18px; }
+    .featured-label::after { content: ""; flex: 0 0 240px; height: 1px; background: var(--line); }
+    .featured { display: flex; gap: 34px; flex-wrap: wrap; }
+    .feat { display: flex; align-items: center; gap: 14px; cursor: pointer; transition: transform .3s; }
+    .feat:hover { transform: translateY(-4px); }
+    .feat-icon {
+      width: 54px; height: 54px; border-radius: 12px; display: grid; place-items: center;
+      background: linear-gradient(145deg, rgba(77,148,255,.25), rgba(10,33,80,.6)); border: 1px solid var(--line);
+    }
+    .feat-icon svg { width: 26px; height: 26px; stroke: var(--sky-300); fill: none; stroke-width: 1.7; }
+    .feat strong { display: block; font-family: "Montserrat"; font-size: 17px; font-weight: 700; }
+    .feat small { font-size: 11px; color: var(--muted); }
+
+    .scroll-hint { position: absolute; right: 32px; bottom: 40px; writing-mode: vertical-rl; font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 12px; }
+    .scroll-hint::after { content: ""; width: 1px; height: 60px; background: linear-gradient(var(--blue-400), transparent); animation: drip 2s infinite; }
+    @keyframes drip { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+
+    /* ---------- SECTIONS ---------- */
+    section { padding: 120px 0; position: relative; }
+    .campus-card { display: flex; flex-direction: column; color: inherit; }
+    .campus-body { flex: 1; display: flex; flex-direction: column; }
+    .campus-body p { flex: 1; }
+    .map-link { margin-top: 16px; display: inline-flex; align-items: center; gap: 8px; font-family: "Montserrat"; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--blue-600); transition: gap .3s; }
+    .map-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.4; }
+    .campus-card:hover .map-link { gap: 12px; }
+    .alum-link { margin-top: 14px; display: inline-flex; align-items: center; gap: 8px; font-family: "Montserrat"; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--sky-300); transition: gap .3s, color .3s; }
+    .alum-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.4; }
+    .alum-link:hover { gap: 12px; color: #fff; }
+    .section-head { max-width: 640px; margin-bottom: 60px; }
+    .section-head.center { margin-inline: auto; text-align: center; }
+    .section-head.center .eyebrow { justify-content: center; }
+    .section-head h2 { font-size: clamp(30px, 4vw, 48px); line-height: 1.12; font-weight: 700; letter-spacing: -.01em; }
+    .section-head p { color: var(--muted); margin-top: 16px; }
+
+    /* Stats strip */
+    .stats { padding: 0; background: linear-gradient(90deg, var(--blue-600), var(--blue-500)); }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .stat { padding: 46px 24px; border-right: 1px solid rgba(255,255,255,.18); }
+    .stat:last-child { border-right: 0; }
+    .stat b { font-family: "Montserrat"; font-size: clamp(34px, 4vw, 52px); font-weight: 800; display: block; line-height: 1; }
+    .stat span { font-size: 13px; color: var(--sky-100); letter-spacing: .04em; }
+
+    /* About */
+    .about { background: var(--navy-900); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
+    .about-card {
+      position: relative; border-radius: 22px; overflow: hidden; aspect-ratio: 4/5;
+      background: linear-gradient(160deg, var(--blue-600), var(--navy-700) 60%, var(--navy-900));
+      border: 1px solid var(--line);
+    }
+    .about-card svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .about-badge {
+      position: absolute; left: 24px; bottom: 24px; right: 24px; padding: 22px 24px; border-radius: 14px;
+      background: rgba(2,11,31,.6); backdrop-filter: blur(10px); border: 1px solid var(--line);
+    }
+    .about-badge b { font-family: "Montserrat"; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--sky-300); }
+    .about-badge p { font-family: "Montserrat"; font-size: 22px; font-weight: 600; font-style: italic; margin-top: 4px; }
+    .about-text p { color: #c3d2ee; margin-bottom: 18px; }
+    .pill-list { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .pill { padding: 9px 16px; border-radius: 999px; font-size: 13px; background: rgba(77,148,255,.1); border: 1px solid var(--line); color: var(--sky-100); }
+
+    /* Faculties */
+    .faculties { background: linear-gradient(180deg, var(--navy-900), var(--navy-800)); }
+    .fac-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .fac {
+      position: relative; padding: 28px 24px; border-radius: var(--radius); background: rgba(10,33,80,.45);
+      border: 1px solid var(--line); overflow: hidden; transition: .35s; cursor: default;
+    }
+    .fac::before {
+      content: ""; position: absolute; inset: 0; background: linear-gradient(145deg, var(--blue-500), var(--blue-600));
+      opacity: 0; transition: .35s; z-index: 0;
+    }
+    .fac > * { position: relative; z-index: 1; }
+    .fac:hover { transform: translateY(-6px); border-color: transparent; box-shadow: 0 20px 40px -20px rgba(31,107,255,.8); }
+    .fac:hover::before { opacity: 1; }
+    .fac .code { font-family: "Montserrat"; font-weight: 800; font-size: 26px; color: var(--sky-300); transition: color .35s; }
+    .fac:hover .code { color: #fff; }
+    .fac h3 { font-size: 14px; font-weight: 600; margin-top: 10px; line-height: 1.4; }
+    .fac .num { position: absolute; top: 18px; right: 20px; font-size: 12px; color: var(--muted); font-family: "Montserrat"; }
+    .fac:hover .num { color: var(--sky-100); }
+    button.fac { font: inherit; color: inherit; text-align: left; cursor: pointer; width: 100%; display: flex; flex-direction: column; align-items: flex-start; }
+    .fac:focus-visible { outline: 2px solid var(--sky-300); outline-offset: 3px; }
+    .fac-more { margin-top: auto; padding-top: 18px; display: inline-flex; align-items: center; gap: 8px; font-family: "Montserrat"; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--sky-300); transition: gap .3s, color .3s; }
+    .fac-more svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.4; }
+    .fac:hover .fac-more { color: #fff; gap: 12px; }
+
+    /* Modal */
+    .modal {
+      position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 16px;
+      background: rgba(2,11,31,.72); backdrop-filter: blur(8px);
+      opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s;
+    }
+    .modal.open { opacity: 1; visibility: visible; }
+    .modal-panel {
+      width: min(720px, 100%); max-height: min(86vh, 820px); display: flex; flex-direction: column;
+      background: var(--navy-800); border: 1px solid var(--line); border-radius: 22px; overflow: hidden;
+      box-shadow: 0 40px 80px -30px rgba(31,107,255,.6);
+      transform: translateY(30px) scale(.97); transition: transform .4s cubic-bezier(.2,.8,.2,1);
+    }
+    .modal.open .modal-panel { transform: none; }
+    .modal-head {
+      position: relative; padding: 34px 36px 28px;
+      background: radial-gradient(circle at 90% 0%, var(--blue-400), transparent 55%), linear-gradient(135deg, var(--blue-600), var(--navy-700));
+    }
+    .m-code { font-family: "Montserrat"; font-size: 13px; font-weight: 800; letter-spacing: .2em; color: var(--sky-300); }
+    .modal-head h3 { font-size: clamp(20px, 2.6vw, 26px); line-height: 1.25; margin: 6px 48px 10px 0; }
+    .modal-head p { color: var(--sky-100); font-size: 14px; max-width: 560px; }
+    .m-count { display: inline-block; margin-top: 16px; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.14); font-size: 12px; font-weight: 600; }
+    .modal-close { position: absolute; top: 22px; right: 22px; width: 40px; height: 40px; border-radius: 50%; border: 0; cursor: pointer; background: rgba(255,255,255,.14); display: grid; place-items: center; transition: .3s; }
+    .modal-close:hover { background: #fff; transform: rotate(90deg); }
+    .modal-close svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2.4; }
+    .modal-close:hover svg { stroke: var(--blue-600); }
+    .modal-body { overflow-y: auto; padding: 14px 24px 24px; }
+    .prog-list { list-style: none; }
+    .prog-list li {
+      display: flex; gap: 18px; padding: 18px 12px; border-bottom: 1px solid var(--line); border-radius: 10px;
+      transition: background .25s; opacity: 0; animation: progIn .45s ease forwards;
+    }
+    .prog-list li:last-child { border-bottom: 0; }
+    .prog-list li:hover { background: rgba(77,148,255,.08); }
+    .p-num { flex: 0 0 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; font-family: "Montserrat"; font-size: 12px; font-weight: 700; color: var(--sky-300); background: rgba(77,148,255,.12); border: 1px solid var(--line); }
+    .prog-list h4 { font-size: 16px; font-weight: 700; }
+    .prog-list p { font-size: 14px; color: var(--muted); margin-top: 4px; }
+    /* Disclaimer */
+    .disclaimer .modal-panel { width: min(480px, 100%); padding: 40px 36px 34px; text-align: center; align-items: center; }
+    .ai-icon { width: 64px; height: 64px; border-radius: 18px; display: grid; place-items: center; margin-bottom: 18px; background: linear-gradient(135deg, var(--blue-500), var(--blue-600)); box-shadow: 0 12px 30px -10px rgba(31,107,255,.9); }
+    .ai-icon svg { width: 32px; height: 32px; fill: #fff; }
+    .disclaimer h3 { font-size: 22px; line-height: 1.3; margin-bottom: 14px; }
+    .disclaimer p { color: #c3d2ee; font-size: 14px; margin-bottom: 12px; }
+    .disclaimer p b { color: #fff; }
+    .disclaimer a { color: var(--sky-300); text-decoration: underline; }
+    .disclaimer .btn { margin-top: 14px; width: 100%; justify-content: center; }
+    @media (max-width: 560px) { .modal.disclaimer { place-items: center; padding: 16px; } .modal.disclaimer .modal-panel { border-radius: 22px; padding: 32px 22px 24px; } }
+
+    @keyframes progIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    @media (max-width: 560px) {
+      .modal { padding: 0; place-items: end stretch; }
+      .modal-panel { border-radius: 22px 22px 0 0; max-height: 90vh; }
+      .modal-head { padding: 28px 22px 22px; }
+      .modal-body { padding: 8px 12px 20px; }
+    }
+
+    /* Campuses */
+    .campus { background: var(--sky-100); color: var(--navy-800); }
+    .campus .section-head p { color: #43608f; }
+    .campus .eyebrow { color: var(--blue-600); }
+    .campus .eyebrow::before { background: var(--blue-600); }
+    .campus-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+    .campus-card {
+      background: #fff; border-radius: 18px; overflow: hidden; box-shadow: 0 10px 40px -20px rgba(6,22,52,.35);
+      transition: .35s;
+    }
+    .campus-card:hover { transform: translateY(-8px); box-shadow: 0 24px 50px -20px rgba(20,80,200,.45); }
+    .campus-thumb { height: 170px; position: relative; overflow: hidden; }
+    .campus-thumb svg { width: 100%; height: 100%; }
+    .campus-thumb .tag { position: absolute; top: 14px; left: 14px; background: rgba(255,255,255,.92); color: var(--blue-600); font-family: "Montserrat"; font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding: 6px 10px; border-radius: 6px; }
+    .campus-body { padding: 22px 22px 26px; }
+    .campus-body h3 { font-size: 19px; font-weight: 700; }
+    .campus-body .loc { font-size: 13px; color: var(--blue-600); font-weight: 600; margin: 4px 0 10px; }
+    .campus-body p { font-size: 14px; color: #4a5f86; }
+
+    /* Timeline */
+    .history { background: var(--navy-900); }
+    .timeline { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+    .timeline::before { content: ""; position: absolute; top: 9px; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--blue-400), rgba(77,148,255,.1)); }
+    .tl-item { position: relative; padding-top: 44px; }
+    .tl-item::before { content: ""; position: absolute; top: 0; left: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--navy-900); border: 3px solid var(--blue-400); box-shadow: 0 0 0 6px rgba(77,148,255,.15); }
+    .tl-item b { font-family: "Montserrat"; font-size: 30px; font-weight: 800; color: var(--sky-300); }
+    .tl-item h4 { font-size: 15px; margin: 6px 0 8px; }
+    .tl-item p { font-size: 14px; color: var(--muted); }
+
+    /* Alumni */
+    .alumni { background: linear-gradient(180deg, var(--navy-900), var(--navy-800)); }
+    .alumni-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 30px; flex-wrap: wrap; margin-bottom: 50px; }
+    .chips { display: flex; gap: 10px; flex-wrap: wrap; }
+    .chip {
+      font-family: "Montserrat"; font-size: 12px; font-weight: 600; letter-spacing: .04em; color: var(--sky-100);
+      padding: 10px 18px; border-radius: 999px; background: rgba(77,148,255,.08); border: 1px solid var(--line); cursor: pointer; transition: .3s;
+    }
+    .chip:hover { border-color: var(--blue-400); }
+    .chip.active { background: var(--blue-500); border-color: var(--blue-500); color: #fff; box-shadow: 0 8px 20px -8px rgba(31,107,255,.9); }
+    .alumni-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .alum {
+      position: relative; padding: 28px 24px 24px; border-radius: 18px; overflow: hidden;
+      background: rgba(10,33,80,.45); border: 1px solid var(--line); transition: transform .35s, box-shadow .35s, border-color .35s, opacity .35s;
+      display: flex; flex-direction: column;
+    }
+    .alum::before { content: ""; position: absolute; top: -60px; right: -60px; width: 160px; height: 160px; border-radius: 50%; background: radial-gradient(circle, rgba(77,148,255,.35), transparent 70%); transition: .35s; }
+    .alum:hover { transform: translateY(-6px); border-color: rgba(140,194,255,.45); box-shadow: 0 24px 50px -24px rgba(31,107,255,.9); }
+    .alum:hover::before { transform: scale(1.4); }
+    .alum.hide { display: none; }
+    .avatar {
+      position: relative; width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center;
+      font-family: "Montserrat"; font-weight: 800; font-size: 22px; letter-spacing: .02em;
+      background: linear-gradient(145deg, var(--sky-300), var(--blue-500) 55%, var(--navy-700));
+      box-shadow: 0 0 0 4px rgba(77,148,255,.15), 0 10px 24px -8px rgba(31,107,255,.8);
+    }
+    .alum .badge { position: absolute; top: 24px; right: 22px; font-family: "Montserrat"; font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--sky-300); background: rgba(77,148,255,.12); border: 1px solid var(--line); padding: 5px 9px; border-radius: 6px; }
+    .alum h3 { font-size: 18px; font-weight: 700; margin-top: 20px; line-height: 1.3; }
+    .alum .role { font-size: 13px; color: var(--sky-300); font-weight: 600; margin-top: 4px; }
+    .alum p { font-size: 14px; color: var(--muted); margin-top: 12px; flex: 1; }
+    .alum .study { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--sky-100); }
+    .alum .study svg { width: 16px; height: 16px; stroke: var(--sky-300); fill: none; stroke-width: 1.8; flex: 0 0 16px; }
+
+    /* Student life */
+    .life { background: linear-gradient(180deg, var(--navy-800), var(--navy-900)); }
+    .life-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr; grid-template-rows: 220px 220px; gap: 18px; }
+    .life-tile {
+      position: relative; border-radius: 18px; overflow: hidden; padding: 26px; display: flex; flex-direction: column; justify-content: flex-end;
+      border: 1px solid var(--line); transition: .35s;
+    }
+    .life-tile:nth-child(1) { grid-row: span 2; background: radial-gradient(circle at 70% 20%, var(--blue-400), var(--blue-600) 45%, var(--navy-700)); }
+    .life-tile:nth-child(2) { background: linear-gradient(135deg, #0d2c66, #123c8a); }
+    .life-tile:nth-child(3) { background: linear-gradient(135deg, #1a4db3, #2a72e8); }
+    .life-tile:nth-child(4) { background: linear-gradient(135deg, #0a2150, #1450c8); }
+    .life-tile:nth-child(5) { background: linear-gradient(135deg, #2a72e8, #8cc2ff); }
+    .life-tile .ico { position: absolute; top: 24px; right: 24px; width: 46px; height: 46px; border-radius: 12px; background: rgba(255,255,255,.14); display: grid; place-items: center; }
+    .life-tile .ico svg { width: 24px; height: 24px; stroke: #fff; fill: none; stroke-width: 1.8; }
+    .life-tile h3 { font-size: 20px; font-weight: 700; }
+    .life-tile:nth-child(1) h3 { font-size: 30px; line-height: 1.15; }
+    .life-tile p { font-size: 14px; color: #dbe7ff; margin-top: 6px; max-width: 360px; }
+
+    /* CTA */
+    .cta { padding: 0 0 120px; background: var(--navy-900); }
+    .cta-box {
+      position: relative; overflow: hidden; border-radius: 26px; padding: 70px 60px;
+      background: linear-gradient(120deg, var(--blue-600), var(--blue-500) 50%, var(--blue-400));
+      display: grid; grid-template-columns: 1.4fr 1fr; align-items: center; gap: 30px;
+    }
+    .cta-box::after { content: ""; position: absolute; right: -120px; top: -120px; width: 420px; height: 420px; border-radius: 50%; border: 60px solid rgba(255,255,255,.08); }
+    .cta-box h2 { font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; }
+    .cta-box p { color: var(--sky-100); margin-top: 12px; }
+    .cta-box .btn-row { justify-content: flex-end; position: relative; z-index: 1; }
+    .btn-white { background: #fff; color: var(--blue-600); }
+    .btn-white:hover { transform: translateY(-3px); box-shadow: 0 14px 30px -10px rgba(2,11,31,.5); }
+
+    /* Footer */
+    footer { background: var(--navy-800); border-top: 1px solid var(--line); padding: 70px 0 30px; }
+    .foot-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; }
+    footer h4 { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--sky-300); margin-bottom: 18px; }
+    footer ul { list-style: none; }
+    footer li { margin-bottom: 10px; font-size: 14px; color: var(--muted); }
+    footer li a:hover { color: #fff; }
+    footer .about-f { color: var(--muted); font-size: 14px; margin-top: 18px; max-width: 320px; }
+    .foot-bottom { margin-top: 50px; padding-top: 24px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 13px; color: var(--muted); }
+
+    /* Floating button */
+    .to-top {
+      position: fixed; right: 26px; bottom: 26px; width: 50px; height: 50px; border-radius: 50%; z-index: 40;
+      background: var(--blue-500); display: grid; place-items: center; box-shadow: 0 10px 30px -8px rgba(31,107,255,.9);
+      opacity: 0; transform: translateY(20px); transition: .3s; border: 0; cursor: pointer;
+    }
+    .to-top.show { opacity: 1; transform: none; }
+    .to-top svg { width: 22px; height: 22px; stroke: #fff; fill: none; stroke-width: 2.2; }
+
+    /* Reveal */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity .9s ease, transform .9s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    .d1 { transition-delay: .1s; } .d2 { transition-delay: .2s; } .d3 { transition-delay: .3s; } .d4 { transition-delay: .4s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      nav ul { gap: 24px; }
+      .fac-grid, .campus-grid { grid-template-columns: repeat(2, 1fr); }
+      .timeline { grid-template-columns: repeat(3, 1fr); row-gap: 40px; }
+      .alumni-grid { grid-template-columns: repeat(2, 1fr); }
+      .timeline::before { display: none; }
+    }
+    @media (max-width: 860px) {
+      .burger { display: block; }
+      nav ul {
+        position: fixed; top: 80px; left: 0; right: 0; flex-direction: column; gap: 0; background: rgba(2,11,31,.97);
+        border-bottom: 1px solid var(--line); max-height: 0; overflow: hidden; transition: max-height .4s;
+      }
+      nav ul.open { max-height: 400px; }
+      nav li a { display: block; padding: 18px 16px; }
+      .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .burger.open span:nth-child(2) { opacity: 0; }
+      .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+      .hero { padding-bottom: 40px; }
+      .hero-grid { grid-template-columns: 1fr; text-align: left; }
+      .hero-visual { justify-self: center; max-width: 420px; order: -1; margin-top: 10px; }
+      .hero-bottom { position: relative; bottom: 0; margin-top: 50px; }
+      .featured-label::after { flex-basis: 80px; }
+      .scroll-hint { display: none; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat:nth-child(2) { border-right: 0; }
+      .stat:nth-child(-n+2) { border-bottom: 1px solid rgba(255,255,255,.18); }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-card { aspect-ratio: 4/3; }
+      .life-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .life-tile { min-height: 200px; }
+      .life-tile:nth-child(1) { grid-column: span 2; grid-row: auto; min-height: 280px; }
+      .cta-box { grid-template-columns: 1fr; padding: 48px 28px; }
+      .cta-box .btn-row { justify-content: flex-start; }
+      .foot-grid { grid-template-columns: 1fr 1fr; }
+      section { padding: 90px 0; }
+    }
+    @media (max-width: 560px) {
+      .fac-grid, .campus-grid { grid-template-columns: 1fr; }
+      .timeline { grid-template-columns: 1fr; }
+      .alumni-grid { grid-template-columns: 1fr; }
+      .life-grid { grid-template-columns: 1fr; }
+      .life-tile:nth-child(1) { grid-column: auto; }
+      .foot-grid { grid-template-columns: 1fr; }
+      .btn { padding: 16px 24px; }
+      .featured { gap: 20px; }
+    }
+  </style>
 </head>
 <body>
-    <h1>bagaimana cara ciri</h1>
-    <p>halo semua</p>
+
+  <!-- ================= NAV ================= -->
+  <header id="header">
+    <div class="container nav">
+      <a href="#beranda" class="brand" aria-label="Beranda">
+        <div class="brand-mark"><span></span></div>
+        <div><b>MENGENAL</b> <em>/ ITB</em></div>
+      </a>
+      <nav>
+        <ul id="menu">
+          <li><a href="#beranda" class="active">Beranda</a></li>
+          <li><a href="#tentang">Tentang</a></li>
+          <li><a href="#fakultas">Fakultas</a></li>
+          <li><a href="#kampus">Kampus</a></li>
+          <li><a href="#sejarah">Sejarah</a></li>
+          <li><a href="#alumni">Alumni</a></li>
+        </ul>
+      </nav>
+      <button class="burger" id="burger" aria-label="Buka menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="beranda">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow reveal">Sejak 1920 · Bandung</div>
+          <h1 class="reveal d1">Institut<br /><span class="grad">Teknologi Bandung</span></h1>
+          <p class="lead reveal d2">Kampus teknik tertua di Indonesia, tempat lahirnya para insinyur, ilmuwan, seniman, dan pemimpin bangsa. Temukan cerita, keilmuan, dan semangat <i>In Harmonia Progressio</i>.</p>
+          <div class="btn-row reveal d3">
+            <a href="#kampus" class="btn btn-primary">Jelajahi Kampus
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#fakultas" class="btn btn-ghost">Lihat Fakultas</a>
+          </div>
+        </div>
+
+        <!-- Hero illustration: stylized Aula building inside glowing orb -->
+        <div class="hero-visual reveal d2" aria-hidden="true">
+          <svg viewBox="0 0 600 600">
+            <defs>
+              <radialGradient id="orb" cx="40%" cy="35%" r="70%">
+                <stop offset="0" stop-color="#8cc2ff" />
+                <stop offset=".35" stop-color="#1f6bff" />
+                <stop offset=".75" stop-color="#0a2150" />
+                <stop offset="1" stop-color="#020b1f" />
+              </radialGradient>
+              <linearGradient id="roof" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#ffffff" />
+                <stop offset="1" stop-color="#cfe4ff" />
+              </linearGradient>
+              <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#e3f0ff" />
+                <stop offset="1" stop-color="#8cc2ff" />
+              </linearGradient>
+              <linearGradient id="refl" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#4d94ff" stop-opacity=".45" />
+                <stop offset="1" stop-color="#4d94ff" stop-opacity="0" />
+              </linearGradient>
+              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="30" />
+              </filter>
+              <clipPath id="orbClip"><circle cx="300" cy="280" r="200" /></clipPath>
+            </defs>
+
+            <circle cx="300" cy="280" r="230" fill="#1f6bff" opacity=".35" filter="url(#glow)" />
+
+            <g class="spin">
+              <circle cx="300" cy="280" r="265" fill="none" stroke="#4d94ff" stroke-opacity=".35" stroke-dasharray="2 10" />
+              <circle cx="565" cy="280" r="6" fill="#8cc2ff" />
+            </g>
+            <g class="spin-rev">
+              <circle cx="300" cy="280" r="235" fill="none" stroke="#8cc2ff" stroke-opacity=".25" />
+              <circle cx="300" cy="45" r="4" fill="#fff" />
+              <circle cx="96" cy="400" r="3" fill="#8cc2ff" />
+            </g>
+
+            <g class="float">
+              <circle cx="300" cy="280" r="200" fill="url(#orb)" />
+              <g clip-path="url(#orbClip)">
+                <!-- distant hills -->
+                <path d="M100 360 Q 190 300 280 345 T 500 330 L 500 480 L 100 480 Z" fill="#0a2150" opacity=".7" />
+                <!-- Building -->
+                <g transform="translate(300 300)">
+                  <!-- lower roof -->
+                  <path d="M-150 30 Q -110 0 -80 -10 L 80 -10 Q 110 0 150 30 Q 120 22 95 22 L -95 22 Q -120 22 -150 30 Z" fill="url(#roof)" />
+                  <!-- middle roof -->
+                  <path d="M-115 -10 Q -85 -40 -55 -52 L 55 -52 Q 85 -40 115 -10 Q 95 -16 75 -16 L -75 -16 Q -95 -16 -115 -10 Z" fill="url(#roof)" />
+                  <!-- top roof -->
+                  <path d="M-80 -52 Q -50 -95 -18 -120 L 18 -120 Q 50 -95 80 -52 Q 64 -58 48 -58 L -48 -58 Q -64 -58 -80 -52 Z" fill="url(#roof)" />
+                  <path d="M-18 -120 L 0 -138 L 18 -120 Z" fill="#fff" />
+                  <!-- walls -->
+                  <rect x="-110" y="22" width="220" height="70" fill="url(#wall)" />
+                  <rect x="-70" y="-16" width="140" height="6" fill="#4d94ff" opacity=".6" />
+                  <!-- windows/arches -->
+                  <g fill="#0a2150">
+                    <path d="M-95 92 v-40 a10 10 0 0 1 20 0 v40 Z" />
+                    <path d="M-60 92 v-40 a10 10 0 0 1 20 0 v40 Z" />
+                    <path d="M-20 92 v-46 a20 20 0 0 1 40 0 v46 Z" />
+                    <path d="M40 92 v-40 a10 10 0 0 1 20 0 v40 Z" />
+                    <path d="M75 92 v-40 a10 10 0 0 1 20 0 v40 Z" />
+                  </g>
+                  <rect x="-130" y="92" width="260" height="10" fill="#e3f0ff" />
+                </g>
+                <!-- ground -->
+                <rect x="100" y="402" width="400" height="80" fill="#061634" />
+              </g>
+              <!-- highlight -->
+              <ellipse cx="230" cy="160" rx="70" ry="34" fill="#fff" opacity=".12" transform="rotate(-30 230 160)" />
+              <circle cx="300" cy="280" r="200" fill="none" stroke="#8cc2ff" stroke-opacity=".5" />
+            </g>
+
+            <!-- reflection -->
+            <ellipse cx="300" cy="530" rx="190" ry="22" fill="url(#refl)" />
+            <ellipse cx="300" cy="528" rx="120" ry="8" fill="#8cc2ff" opacity=".35" filter="url(#glow)" />
+          </svg>
+        </div>
+      </div>
+
+      <div class="hero-bottom">
+        <div class="container">
+          <div class="featured-label reveal">Sorotan ITB</div>
+          <div class="featured reveal d1">
+            <a href="#sejarah" class="feat">
+              <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V10l7-5 7 5v11M9 21v-6h6v6"/></svg></div>
+              <div><strong>1920</strong><small>Tahun berdiri</small></div>
+            </a>
+            <a href="#fakultas" class="feat">
+              <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg></div>
+              <div><strong>12</strong><small>Fakultas & Sekolah</small></div>
+            </a>
+            <a href="#kampus" class="feat">
+              <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+              <div><strong>4</strong><small>Lokasi kampus</small></div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a href="#tentang" class="scroll-hint" aria-label="Gulir ke bagian Tentang">Gulir</a>
+  </section>
+
+  <!-- ================= STATS ================= -->
+  <section class="stats">
+    <div class="container stats-grid">
+      <div class="stat reveal"><b data-count="100">0</b><span>Tahun lebih berkarya</span></div>
+      <div class="stat reveal d1"><b data-count="12">0</b><span>Fakultas & Sekolah</span></div>
+      <div class="stat reveal d2"><b data-count="4">0</b><span>Kampus di Indonesia</span></div>
+      <div class="stat reveal d3"><b data-count="1959" data-plain="1">0</b><span>Resmi menjadi ITB</span></div>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section class="about" id="tentang">
+    <div class="container about-grid">
+      <div class="about-card reveal" aria-hidden="true">
+        <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#4d94ff" /><stop offset="1" stop-color="#0a2150" />
+            </linearGradient>
+          </defs>
+          <rect width="400" height="500" fill="url(#sky2)" />
+          <circle cx="300" cy="110" r="46" fill="#e3f0ff" opacity=".9" />
+          <circle cx="300" cy="110" r="80" fill="#e3f0ff" opacity=".08" />
+          <path d="M0 300 Q 100 230 200 270 T 400 250 V500 H0Z" fill="#1450c8" opacity=".55" />
+          <path d="M0 340 Q 120 290 240 320 T 400 310 V500 H0Z" fill="#0a2150" opacity=".8" />
+          <!-- tree rows -->
+          <g fill="#061634">
+            <circle cx="40" cy="350" r="26" /><circle cx="80" cy="340" r="20" /><rect x="38" y="350" width="4" height="40" />
+            <circle cx="350" cy="345" r="28" /><circle cx="380" cy="360" r="20" /><rect x="348" y="350" width="4" height="40" />
+          </g>
+          <!-- gate -->
+          <g transform="translate(200 360)" fill="#e3f0ff">
+            <path d="M-90 0 Q -60 -30 -30 -40 L 30 -40 Q 60 -30 90 0 Q 70 -6 50 -6 L -50 -6 Q -70 -6 -90 0Z" />
+            <path d="M-50 -40 Q -25 -80 0 -95 Q 25 -80 50 -40Z" />
+            <rect x="-60" y="0" width="12" height="60" /><rect x="48" y="0" width="12" height="60" />
+            <rect x="-70" y="60" width="140" height="8" />
+          </g>
+          <rect y="428" width="400" height="72" fill="#020b1f" opacity=".9" />
+        </svg>
+        <div class="about-badge">
+          <b>Semboyan</b>
+          <p>"In Harmonia Progressio"</p>
+        </div>
+      </div>
+
+      <div class="about-text">
+        <div class="section-head" style="margin-bottom:24px">
+          <div class="eyebrow reveal">Tentang ITB</div>
+          <h2 class="reveal d1">Satu abad membangun ilmu untuk bangsa</h2>
+        </div>
+        <p class="reveal d2">Institut Teknologi Bandung bermula dari <i>Technische Hoogeschool te Bandoeng</i> yang dibuka pada 3 Juli 1920 — perguruan tinggi teknik pertama di Hindia Belanda. Salah satu lulusan awalnya adalah Ir. Soekarno, Presiden pertama Republik Indonesia.</p>
+        <p class="reveal d2">Pada 2 Maret 1959, ITB resmi berdiri sebagai institut. Kini ITB dikenal sebagai salah satu kampus terbaik di Indonesia, unggul di bidang sains, teknologi, seni, dan bisnis, dengan semboyan <i>In Harmonia Progressio</i> — kemajuan dalam keselarasan.</p>
+        <div class="pill-list reveal d3">
+          <span class="pill">Sains & Teknologi</span>
+          <span class="pill">Seni & Desain</span>
+          <span class="pill">Bisnis & Manajemen</span>
+          <span class="pill">Riset & Inovasi</span>
+          <span class="pill">Kewirausahaan</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FACULTIES ================= -->
+  <section class="faculties" id="fakultas">
+    <div class="container">
+      <div class="section-head center">
+        <div class="eyebrow reveal">Fakultas & Sekolah</div>
+        <h2 class="reveal d1">12 rumah keilmuan, satu semangat</h2>
+        <p class="reveal d2">Dari matematika murni hingga seni rupa, ITB menaungi beragam disiplin yang saling terhubung.</p>
+      </div>
+      <div class="fac-grid" id="facGrid"></div>
+    </div>
+  </section>
+
+  <!-- ================= CAMPUSES ================= -->
+  <section class="campus" id="kampus">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow reveal">Lokasi Kampus</div>
+        <h2 class="reveal d1">Belajar di berbagai penjuru</h2>
+        <p class="reveal d2">ITB berkembang dari Jalan Ganesa ke beberapa kota untuk memperluas akses pendidikan dan riset.</p>
+      </div>
+      <div class="campus-grid">
+        <a class="campus-card reveal" href="https://www.google.com/maps/search/?api=1&amp;query=Institut+Teknologi+Bandung+Kampus+Ganesha" target="_blank" rel="noopener" aria-label="Lihat Kampus Ganesha di Google Maps">
+          <div class="campus-thumb">
+            <svg viewBox="0 0 300 170" preserveAspectRatio="xMidYMid slice"><rect width="300" height="170" fill="#1450c8"/><circle cx="240" cy="40" r="20" fill="#e3f0ff"/><path d="M0 120 Q 80 80 160 110 T 300 100 V170 H0Z" fill="#0a2150"/><g fill="#fff" transform="translate(150 125)"><path d="M-50 0 Q -30 -18 -15 -22 L 15 -22 Q 30 -18 50 0Z"/><path d="M-28 -22 Q -12 -44 0 -52 Q 12 -44 28 -22Z"/><rect x="-36" y="0" width="72" height="22"/></g></svg>
+            <span class="tag">Utama</span>
+          </div>
+          <div class="campus-body"><h3>Kampus Ganesha</h3><div class="loc">Bandung, Jawa Barat</div><p>Kampus bersejarah di Jalan Ganesa 10 dengan Aula Barat & Aula Timur yang ikonik.</p><span class="map-link">Lihat di peta <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span></div>
+        </a>
+        <a class="campus-card reveal d1" href="https://www.google.com/maps/search/?api=1&amp;query=Institut+Teknologi+Bandung+Kampus+Jatinangor" target="_blank" rel="noopener" aria-label="Lihat Kampus Jatinangor di Google Maps">
+          <div class="campus-thumb">
+            <svg viewBox="0 0 300 170" preserveAspectRatio="xMidYMid slice"><rect width="300" height="170" fill="#2a72e8"/><path d="M0 110 L 70 50 L 130 100 L 200 40 L 300 110 V170 H0Z" fill="#1450c8"/><path d="M0 130 Q 100 100 200 125 T 300 120 V170 H0Z" fill="#0a2150"/><g fill="#e3f0ff"><rect x="100" y="100" width="40" height="40"/><rect x="150" y="90" width="50" height="50"/><rect x="210" y="105" width="30" height="35"/></g></svg>
+            <span class="tag">Sumedang</span>
+          </div>
+          <div class="campus-body"><h3>Kampus Jatinangor</h3><div class="loc">Sumedang, Jawa Barat</div><p>Kampus luas dan hijau untuk pengembangan pendidikan tahap persiapan dan riset.</p><span class="map-link">Lihat di peta <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span></div>
+        </a>
+        <a class="campus-card reveal d2" href="https://www.google.com/maps/search/?api=1&amp;query=Institut+Teknologi+Bandung+Kampus+Cirebon" target="_blank" rel="noopener" aria-label="Lihat Kampus Cirebon di Google Maps">
+          <div class="campus-thumb">
+            <svg viewBox="0 0 300 170" preserveAspectRatio="xMidYMid slice"><rect width="300" height="170" fill="#4d94ff"/><circle cx="70" cy="50" r="18" fill="#fff"/><path d="M0 115 Q 50 105 100 115 T 200 115 T 300 115 V170 H0Z" fill="#1450c8"/><path d="M0 135 Q 50 125 100 135 T 200 135 T 300 135 V170 H0Z" fill="#0a2150"/><g fill="#fff"><rect x="170" y="70" width="60" height="45"/><path d="M165 70 L 200 48 L 235 70Z"/></g></svg>
+            <span class="tag">Pesisir</span>
+          </div>
+          <div class="campus-body"><h3>Kampus Cirebon</h3><div class="loc">Cirebon, Jawa Barat</div><p>Mendekatkan pendidikan teknologi dan seni dengan potensi wilayah pantai utara Jawa.</p><span class="map-link">Lihat di peta <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span></div>
+        </a>
+        <a class="campus-card reveal d3" href="https://www.google.com/maps/search/?api=1&amp;query=Institut+Teknologi+Bandung+Kampus+Jakarta" target="_blank" rel="noopener" aria-label="Lihat Kampus Jakarta di Google Maps">
+          <div class="campus-thumb">
+            <svg viewBox="0 0 300 170" preserveAspectRatio="xMidYMid slice"><rect width="300" height="170" fill="#0a2150"/><g fill="#1450c8"><rect x="20" y="60" width="40" height="110"/><rect x="70" y="30" width="36" height="140"/><rect x="200" y="50" width="44" height="120"/><rect x="250" y="80" width="40" height="90"/></g><g fill="#8cc2ff"><rect x="120" y="20" width="60" height="150"/></g><g fill="#0a2150"><rect x="130" y="35" width="10" height="8"/><rect x="160" y="35" width="10" height="8"/><rect x="130" y="60" width="10" height="8"/><rect x="160" y="60" width="10" height="8"/><rect x="130" y="85" width="10" height="8"/><rect x="160" y="85" width="10" height="8"/></g></svg>
+            <span class="tag">Ibu kota</span>
+          </div>
+          <div class="campus-body"><h3>Kampus Jakarta</h3><div class="loc">DKI Jakarta</div><p>Menjadi pusat program pascasarjana dan kemitraan dengan industri di ibu kota.</p><span class="map-link">Lihat di peta <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HISTORY ================= -->
+  <section class="history" id="sejarah">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow reveal">Jejak Sejarah</div>
+        <h2 class="reveal d1">Perjalanan lebih dari satu abad</h2>
+      </div>
+      <div class="timeline">
+        <div class="tl-item reveal"><b>1920</b><h4>Technische Hoogeschool</h4><p>Sekolah tinggi teknik dibuka di Bandung pada 3 Juli 1920.</p></div>
+        <div class="tl-item reveal d1"><b>1926</b><h4>Lulusan bersejarah</h4><p>Soekarno menyelesaikan studi teknik sipil dan meraih gelar insinyur.</p></div>
+        <div class="tl-item reveal d2"><b>1959</b><h4>Lahirnya ITB</h4><p>Pada 2 Maret 1959, Institut Teknologi Bandung resmi didirikan.</p></div>
+        <div class="tl-item reveal d3"><b>2020</b><h4>Satu abad</h4><p>ITB merayakan 100 tahun pendidikan tinggi teknik di Indonesia.</p></div>
+        <div class="tl-item reveal d4"><b>Kini</b><h4>Multi-kampus</h4><p>Hadir di Ganesha, Jatinangor, Cirebon, dan Jakarta.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ALUMNI ================= -->
+  <section class="alumni" id="alumni">
+    <div class="container">
+      <div class="alumni-top">
+        <div class="section-head" style="margin-bottom:0">
+          <div class="eyebrow reveal">Alumni Ternama</div>
+          <h2 class="reveal d1">Jejak para tokoh dari kampus Ganesha</h2>
+          <p class="reveal d2">Dari proklamator hingga pendiri startup, lulusan ITB ikut membentuk wajah Indonesia.</p>
+        </div>
+        <div class="chips reveal d2" id="alumniFilter" role="tablist" aria-label="Filter alumni">
+          <button type="button" class="chip active" data-f="all">Semua</button>
+          <button type="button" class="chip" data-f="bangsa">Pemimpin Bangsa</button>
+          <button type="button" class="chip" data-f="teknologi">Teknologi</button>
+          <button type="button" class="chip" data-f="bisnis">Bisnis</button>
+        </div>
+      </div>
+      <div class="alumni-grid" id="alumniGrid"></div>
+    </div>
+  </section>
+
+  <!-- ================= STUDENT LIFE ================= -->
+  <section class="life">
+    <div class="container">
+      <div class="section-head center">
+        <div class="eyebrow reveal">Kehidupan Mahasiswa</div>
+        <h2 class="reveal d1">Lebih dari sekadar ruang kelas</h2>
+      </div>
+      <div class="life-grid">
+        <div class="life-tile reveal">
+          <div class="ico"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 20c0-2.5 1.5-4.5 4-4.5s3 1 3 2"/></svg></div>
+          <h3>Himpunan & Unit Kegiatan Mahasiswa</h3>
+          <p>Ratusan organisasi — dari himpunan jurusan, seni budaya, olahraga, hingga robotika — membentuk karakter dan kepemimpinan.</p>
+        </div>
+        <div class="life-tile reveal d1">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/></svg></div>
+          <h3>Riset</h3><p>Laboratorium & pusat penelitian.</p>
+        </div>
+        <div class="life-tile reveal d2">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div>
+          <h3>Prestasi</h3><p>Kompetisi nasional & internasional.</p>
+        </div>
+        <div class="life-tile reveal d3">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 19V5l8 4 8-4v14l-8-4-8 4z"/></svg></div>
+          <h3>Seni & Budaya</h3><p>Pentas, pameran, dan festival.</p>
+        </div>
+        <div class="life-tile reveal d4">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-4 12.7V18h8v-3.3A7 7 0 0 0 12 2zM9 22h6"/></svg></div>
+          <h3>Inovasi</h3><p>Startup & kewirausahaan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CTA ================= -->
+  <section class="cta" id="daftar">
+    <div class="container">
+      <div class="cta-box reveal">
+        <div>
+          <h2>Siap menjadi bagian dari ITB?</h2>
+          <p>Cari tahu jalur masuk, program studi, dan beasiswa yang tersedia.</p>
+        </div>
+        <div class="btn-row">
+          <a href="https://www.itb.ac.id" target="_blank" rel="noopener" class="btn btn-white">Situs Resmi ITB</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="container">
+      <div class="foot-grid">
+        <div>
+          <a href="#beranda" class="brand"><div class="brand-mark"><span></span></div><div><b>MENGENAL</b> <em>/ ITB</em></div></a>
+          <p class="about-f">Website pengenalan Institut Teknologi Bandung. Dibuat untuk tujuan edukasi dan informasi.</p>
+        </div>
+        <div><h4>Jelajahi</h4><ul><li><a href="#tentang">Tentang</a></li><li><a href="#fakultas">Fakultas</a></li><li><a href="#kampus">Kampus</a></li><li><a href="#sejarah">Sejarah</a></li><li><a href="#alumni">Alumni</a></li></ul></div>
+        <div><h4>Kampus</h4><ul>
+          <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Institut+Teknologi+Bandung+Kampus+Ganesha" target="_blank" rel="noopener">Ganesha</a></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Institut+Teknologi+Bandung+Kampus+Jatinangor" target="_blank" rel="noopener">Jatinangor</a></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Institut+Teknologi+Bandung+Kampus+Cirebon" target="_blank" rel="noopener">Cirebon</a></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Institut+Teknologi+Bandung+Kampus+Jakarta" target="_blank" rel="noopener">Jakarta</a></li>
+        </ul></div>
+        <div><h4>Alamat</h4><ul><li><a href="https://www.google.com/maps/search/?api=1&amp;query=Jl.+Ganesa+No.+10+Bandung" target="_blank" rel="noopener">Jl. Ganesa No. 10<br />Coblong, Bandung<br />Jawa Barat 40132</a></li><li><a href="https://www.itb.ac.id" target="_blank" rel="noopener">www.itb.ac.id</a></li></ul></div>
+      </div>
+      <div class="foot-bottom"><span>© <span id="year"></span> Mengenal ITB — proyek edukasi yang dibuat dengan bantuan AI, bukan situs resmi.</span><span>In Harmonia Progressio</span></div>
+    </div>
+  </footer>
+
+  <!-- Disclaimer AI (muncul saat kunjungan pertama) -->
+  <div class="modal disclaimer" id="aiNotice" role="alertdialog" aria-modal="true" aria-labelledby="aiTitle" aria-describedby="aiDesc">
+    <div class="modal-panel">
+      <div class="ai-icon"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></div>
+      <div class="eyebrow" style="justify-content:center;margin-bottom:12px">Disclaimer</div>
+      <h3 id="aiTitle">Website ini dibuat dengan bantuan AI</h3>
+      <div id="aiDesc">
+        <p>Desain, kode, dan isi website ini dibuat menggunakan kecerdasan buatan (AI). Situs ini adalah <b>proyek edukasi</b> dan <b>bukan situs resmi</b> Institut Teknologi Bandung.</p>
+        <p>Informasi seperti sejarah, fakultas, dan program studi mungkin tidak sepenuhnya akurat atau terbaru. Untuk informasi resmi, kunjungi <a href="https://www.itb.ac.id" target="_blank" rel="noopener">itb.ac.id</a>.</p>
+      </div>
+      <button type="button" class="btn btn-primary" id="aiOk">Saya Mengerti</button>
+    </div>
+  </div>
+
+  <!-- Modal daftar jurusan -->
+  <div class="modal" id="progModal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <div class="modal-panel">
+      <div class="modal-head">
+        <button type="button" class="modal-close" aria-label="Tutup"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+        <div class="m-code" id="mCode"></div>
+        <h3 id="mTitle"></h3>
+        <p id="mDesc"></p>
+        <span class="m-count" id="mCount"></span>
+      </div>
+      <div class="modal-body">
+        <ul class="prog-list" id="mList"></ul>
+      </div>
+    </div>
+  </div>
+
+  <button class="to-top" id="toTop" aria-label="Kembali ke atas"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+
+  <script>
+    // Faculty data
+    // [kode, nama, deskripsi fakultas, [[jurusan, apa yang dipelajari], ...]]
+    const faculties = [
+      ["FMIPA", "Fakultas Matematika dan Ilmu Pengetahuan Alam",
+        "Mempelajari ilmu dasar alam semesta — dari angka, materi, hingga bintang — sebagai fondasi semua teknologi.", [
+        ["Matematika", "Mempelajari struktur, pola, dan logika matematika serta penerapannya untuk memodelkan masalah nyata."],
+        ["Aktuaria", "Menggunakan matematika dan statistika untuk menghitung risiko, terutama di asuransi, dana pensiun, dan keuangan."],
+        ["Fisika", "Mengkaji hukum dasar alam seperti gerak, energi, cahaya, dan materi, dari skala atom hingga kosmos."],
+        ["Astronomi", "Satu-satunya prodi astronomi di Indonesia; mempelajari bintang, planet, galaksi, dan alam semesta lewat Observatorium Bosscha."],
+        ["Kimia", "Mempelajari susunan, sifat, dan reaksi zat untuk mengembangkan material, obat, dan proses baru."],
+      ]],
+      ["SITH", "Sekolah Ilmu dan Teknologi Hayati",
+        "Mengkaji makhluk hidup dan memanfaatkannya secara berkelanjutan untuk pangan, kesehatan, dan lingkungan.", [
+        ["Biologi", "Mempelajari makhluk hidup dari tingkat sel, genetika, hingga ekosistem dan keanekaragaman hayati."],
+        ["Mikrobiologi", "Fokus pada mikroorganisme (bakteri, jamur, virus) dan pemanfaatannya di industri, kesehatan, dan lingkungan."],
+        ["Rekayasa Hayati", "Menerapkan prinsip teknik pada sistem biologis, misalnya bioproses, bioenergi, dan bioteknologi."],
+        ["Rekayasa Pertanian", "Merancang sistem pertanian modern dan efisien untuk meningkatkan produksi pangan."],
+        ["Rekayasa Kehutanan", "Mengelola dan merekayasa sumber daya hutan agar produktif sekaligus lestari."],
+        ["Teknologi Pasca Panen", "Menjaga mutu hasil panen lewat penyimpanan, pengolahan, dan pengemasan."],
+      ]],
+      ["SF", "Sekolah Farmasi",
+        "Mempelajari obat dari penemuan, pembuatan, hingga penggunaannya yang aman bagi pasien.", [
+        ["Sains dan Teknologi Farmasi", "Fokus pada penemuan, formulasi, produksi, dan pengujian mutu obat serta kosmetik."],
+        ["Farmasi Klinik dan Komunitas", "Fokus pada pelayanan obat kepada pasien di rumah sakit, apotek, dan masyarakat."],
+      ]],
+      ["FITB", "Fakultas Ilmu dan Teknologi Kebumian",
+        "Mengkaji bumi — batuan, laut, atmosfer, dan permukaannya — untuk sumber daya dan mitigasi bencana.", [
+        ["Teknik Geologi", "Mempelajari batuan, struktur, dan sejarah bumi untuk eksplorasi sumber daya dan mitigasi bencana geologi."],
+        ["Teknik Geodesi dan Geomatika", "Mengukur dan memetakan permukaan bumi menggunakan GPS, satelit, drone, dan sistem informasi geografis."],
+        ["Meteorologi", "Mempelajari atmosfer, cuaca, dan iklim termasuk prakiraan cuaca dan perubahan iklim."],
+        ["Oseanografi", "Mengkaji laut: arus, gelombang, pasang surut, dan interaksinya dengan iklim serta ekosistem."],
+      ]],
+      ["FTTM", "Fakultas Teknik Pertambangan dan Perminyakan",
+        "Mengelola sumber daya mineral dan energi dari perut bumi secara efisien dan bertanggung jawab.", [
+        ["Teknik Pertambangan", "Merancang penambangan mineral dan batubara yang aman, ekonomis, dan ramah lingkungan."],
+        ["Teknik Perminyakan", "Mempelajari cara menemukan, mengebor, dan memproduksi minyak serta gas bumi."],
+        ["Teknik Geofisika", "Menggunakan metode fisika (seismik, gravitasi, magnetik) untuk 'melihat' struktur bawah permukaan bumi."],
+        ["Teknik Metalurgi", "Mengolah bijih menjadi logam dan merekayasa sifat logam untuk industri."],
+      ]],
+      ["STEI", "Sekolah Teknik Elektro dan Informatika",
+        "Pusat keilmuan listrik, elektronika, komputer, dan teknologi informasi.", [
+        ["Teknik Elektro", "Mempelajari rangkaian elektronik, sistem kendali, dan perangkat keras berbasis listrik."],
+        ["Teknik Informatika", "Mempelajari pemrograman, algoritma, kecerdasan buatan, dan rekayasa perangkat lunak."],
+        ["Sistem dan Teknologi Informasi", "Merancang sistem informasi yang membantu organisasi dan bisnis bekerja lebih efektif."],
+        ["Teknik Tenaga Listrik", "Fokus pada pembangkitan, transmisi, dan distribusi energi listrik, termasuk energi terbarukan."],
+        ["Teknik Telekomunikasi", "Mempelajari jaringan komunikasi seperti seluler, internet, satelit, dan gelombang radio."],
+        ["Teknik Biomedis", "Menggabungkan teknik dan kedokteran untuk merancang alat kesehatan dan pencitraan medis."],
+      ]],
+      ["FTSL", "Fakultas Teknik Sipil dan Lingkungan",
+        "Membangun infrastruktur dan menjaga lingkungan tempat manusia hidup.", [
+        ["Teknik Sipil", "Merancang dan membangun gedung, jembatan, jalan, bendungan, dan infrastruktur lainnya."],
+        ["Teknik Lingkungan", "Mengelola air bersih, limbah, sampah, dan polusi udara untuk lingkungan yang sehat."],
+        ["Teknik Kelautan", "Merancang bangunan laut seperti pelabuhan, anjungan lepas pantai, dan pengaman pantai."],
+        ["Rekayasa Infrastruktur Lingkungan", "Merancang infrastruktur sanitasi, drainase, dan pengolahan air di perkotaan."],
+        ["Teknik dan Pengelolaan Sumber Daya Air", "Mengelola sungai, irigasi, dan cadangan air untuk kebutuhan dan pengendalian banjir."],
+      ]],
+      ["FTI", "Fakultas Teknologi Industri",
+        "Merancang proses, sistem, dan produk industri yang efisien dan berkelanjutan.", [
+        ["Teknik Kimia", "Merancang proses mengubah bahan mentah menjadi produk bernilai seperti BBM, plastik, dan pupuk."],
+        ["Teknik Fisika", "Menerapkan fisika untuk instrumentasi, akustik, optik, energi, dan material."],
+        ["Teknik Industri", "Mengoptimalkan sistem produksi, logistik, dan operasional agar efisien."],
+        ["Manajemen Rekayasa Industri", "Menggabungkan teknik industri dan manajemen untuk mengelola perusahaan berbasis teknologi."],
+        ["Teknik Pangan", "Merancang proses pengolahan pangan yang aman, bergizi, dan dapat diproduksi massal."],
+        ["Teknik Bioenergi dan Kemurgi", "Mengolah biomassa menjadi energi dan bahan kimia terbarukan."],
+      ]],
+      ["FTMD", "Fakultas Teknik Mesin dan Dirgantara",
+        "Merancang mesin, kendaraan, pesawat, dan material yang menggerakkan dunia.", [
+        ["Teknik Mesin", "Merancang dan menganalisis mesin, sistem energi, manufaktur, dan otomotif."],
+        ["Teknik Dirgantara", "Satu-satunya di Indonesia; merancang pesawat terbang, roket, satelit, dan drone."],
+        ["Teknik Material", "Mengembangkan dan menguji material seperti logam, polimer, keramik, dan komposit."],
+      ]],
+      ["FSRD", "Fakultas Seni Rupa dan Desain",
+        "Mengasah kreativitas melalui seni dan desain untuk ekspresi, budaya, dan industri kreatif.", [
+        ["Seni Rupa", "Berkarya lewat lukis, patung, grafis, keramik, dan intermedia sebagai ekspresi seni."],
+        ["Kriya", "Mengolah material seperti tekstil, kayu, logam, dan keramik menjadi karya kerajinan bernilai seni."],
+        ["Desain Interior", "Merancang ruang dalam bangunan agar fungsional, nyaman, dan estetis."],
+        ["Desain Komunikasi Visual", "Menyampaikan pesan lewat visual: branding, ilustrasi, tipografi, animasi, dan media digital."],
+        ["Desain Produk", "Merancang benda sehari-hari — dari furnitur hingga gadget — yang berguna dan menarik."],
+      ]],
+      ["SAPPK", "Sekolah Arsitektur, Perencanaan dan Pengembangan Kebijakan",
+        "Merancang bangunan dan kota yang layak huni serta kebijakan pembangunannya.", [
+        ["Arsitektur", "Merancang bangunan dan lingkungan binaan yang indah, fungsional, dan berkelanjutan."],
+        ["Perencanaan Wilayah dan Kota", "Merencanakan tata ruang kota dan wilayah: transportasi, permukiman, dan kebijakan pembangunan."],
+      ]],
+      ["SBM", "Sekolah Bisnis dan Manajemen",
+        "Mencetak pemimpin bisnis dan wirausaha dengan pendekatan berbasis teknologi.", [
+        ["Manajemen", "Mempelajari pengelolaan organisasi: keuangan, pemasaran, operasi, dan sumber daya manusia."],
+        ["Kewirausahaan", "Belajar membangun dan mengembangkan bisnis sendiri, dari ide hingga startup yang berkelanjutan."],
+      ]],
+    ];
+    const facGrid = document.getElementById("facGrid");
+    facGrid.innerHTML = faculties.map(([code, name, , progs], i) => `
+      <button type="button" class="fac reveal d${(i % 4) + 1}" data-i="${i}" aria-haspopup="dialog">
+        <span class="num">${String(i + 1).padStart(2, "0")}</span>
+        <div class="code">${code}</div>
+        <h3>${name}</h3>
+        <span class="fac-more">${progs.length} program studi
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </span>
+      </button>`).join("");
+
+    // Halaman Wikipedia tiap tokoh (urutan sama dengan array alumni)
+    const alumniWiki = ["Soekarno", "Djuanda_Kartawidjaja", "Bacharuddin_Jusuf_Habibie", "Sedyatmo",
+      "Ciputra", "Arifin_Panigoro", "Ridwan_Kamil", "Achmad_Zaky"];
+    // Alumni ternama: [inisial, nama, peran, kategori, label, cerita singkat, riwayat studi]
+    const alumni = [
+      ["IS", "Ir. Soekarno", "Presiden ke-1 RI", "bangsa", "Proklamator",
+        "Memproklamasikan kemerdekaan Indonesia bersama Mohammad Hatta pada 17 Agustus 1945.", "Teknik Sipil, lulus 1926"],
+      ["DJ", "Ir. H. Djuanda Kartawidjaja", "Perdana Menteri RI 1957–1959", "bangsa", "Negarawan",
+        "Pencetus Deklarasi Djuanda 1957 yang menjadikan laut di antara pulau sebagai wilayah Indonesia.", "Teknik Sipil, lulus 1933"],
+      ["BJ", "B.J. Habibie", "Presiden ke-3 RI", "teknologi", "Bapak Teknologi",
+        "Ahli konstruksi pesawat terbang dan perintis industri dirgantara Indonesia.", "Pernah kuliah Teknik Mesin, 1954"],
+      ["SD", "Prof. Ir. Sedyatmo", "Insinyur & Penemu", "teknologi", "Inovator",
+        "Penemu fondasi “cakar ayam”. Namanya diabadikan pada jalan tol menuju Bandara Soekarno-Hatta.", "Teknik Sipil, lulus 1934"],
+      ["CP", "Ir. Ciputra", "Pendiri Ciputra Group", "bisnis", "Pengusaha",
+        "Pengembang properti yang membangun banyak kawasan kota dan giat mengembangkan pendidikan kewirausahaan.", "Arsitektur, lulus 1960"],
+      ["AP", "Arifin Panigoro", "Pendiri Medco Energi", "bisnis", "Pengusaha",
+        "Membangun Medco menjadi salah satu perusahaan energi swasta nasional terbesar di Indonesia.", "Teknik Elektro"],
+      ["RK", "Ridwan Kamil", "Gubernur Jawa Barat 2018–2023", "bangsa", "Arsitek",
+        "Arsitek yang menjadi Wali Kota Bandung lalu Gubernur Jawa Barat, dikenal lewat penataan ruang publik.", "Arsitektur, lulus 1995"],
+      ["AZ", "Achmad Zaky", "Pendiri Bukalapak", "teknologi", "Startup",
+        "Mendirikan Bukalapak pada 2010, salah satu marketplace dan unicorn teknologi pertama Indonesia.", "Teknik Informatika, lulus 2009"],
+    ];
+    const alumniGrid = document.getElementById("alumniGrid");
+    alumniGrid.innerHTML = alumni.map(([ini, name, role, cat, badge, story, study], i) => `
+      <article class="alum reveal d${(i % 4) + 1}" data-cat="${cat}">
+        <span class="badge">${badge}</span>
+        <div class="avatar" aria-hidden="true">${ini}</div>
+        <h3>${name}</h3>
+        <div class="role">${role}</div>
+        <p>${story}</p>
+        <div class="study"><svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>${study}</div>
+        <a class="alum-link" href="https://id.wikipedia.org/wiki/${alumniWiki[i]}" target="_blank" rel="noopener" aria-label="Baca profil ${name} di Wikipedia">Baca profil
+          <svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+      </article>`).join("");
+    document.getElementById("alumniFilter").addEventListener("click", e => {
+      const chip = e.target.closest(".chip");
+      if (!chip) return;
+      document.querySelectorAll("#alumniFilter .chip").forEach(c => c.classList.toggle("active", c === chip));
+      const f = chip.dataset.f;
+      alumniGrid.querySelectorAll(".alum").forEach(card => card.classList.toggle("hide", f !== "all" && card.dataset.cat !== f));
+    });
+
+    // Modal jurusan
+    const modal = document.getElementById("progModal");
+    let lastFocus = null;
+    const openModal = i => {
+      const [code, name, desc, progs] = faculties[i];
+      document.getElementById("mCode").textContent = code;
+      document.getElementById("mTitle").textContent = name;
+      document.getElementById("mDesc").textContent = desc;
+      document.getElementById("mCount").textContent = progs.length + " program studi sarjana";
+      document.getElementById("mList").innerHTML = progs.map(([p, d], j) => `
+        <li style="animation-delay:${j * 60}ms">
+          <span class="p-num">${String(j + 1).padStart(2, "0")}</span>
+          <div><h4>${p}</h4><p>${d}</p></div>
+        </li>`).join("");
+      lastFocus = document.activeElement;
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+      modal.querySelector(".modal-body").scrollTop = 0;
+      modal.querySelector(".modal-close").focus();
+    };
+    const closeModal = () => {
+      modal.classList.remove("open");
+      document.body.style.overflow = "";
+      lastFocus && lastFocus.focus();
+    };
+    facGrid.addEventListener("click", e => {
+      const card = e.target.closest(".fac");
+      if (card) openModal(+card.dataset.i);
+    });
+    modal.addEventListener("click", e => { if (e.target === modal || e.target.closest(".modal-close")) closeModal(); });
+    addEventListener("keydown", e => { if (e.key === "Escape" && modal.classList.contains("open")) closeModal(); });
+
+    // Disclaimer AI: tampil sekali per pengunjung (disimpan di localStorage)
+    const notice = document.getElementById("aiNotice");
+    const NOTICE_KEY = "itb-ai-disclaimer-seen";
+    let seen = false;
+    try { seen = localStorage.getItem(NOTICE_KEY) === "1"; } catch (e) {}
+    if (!seen) {
+      setTimeout(() => {
+        notice.classList.add("open");
+        document.body.style.overflow = "hidden";
+        document.getElementById("aiOk").focus();
+      }, 400);
+    }
+    document.getElementById("aiOk").onclick = () => {
+      notice.classList.remove("open");
+      document.body.style.overflow = "";
+      try { localStorage.setItem(NOTICE_KEY, "1"); } catch (e) {}
+    };
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Header + back to top
+    const header = document.getElementById("header");
+    const toTop = document.getElementById("toTop");
+    const onScroll = () => {
+      header.classList.toggle("scrolled", scrollY > 40);
+      toTop.classList.toggle("show", scrollY > 600);
+    };
+    addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    toTop.onclick = () => scrollTo({ top: 0, behavior: "smooth" });
+
+    // Mobile menu
+    const burger = document.getElementById("burger");
+    const menu = document.getElementById("menu");
+    burger.onclick = () => { burger.classList.toggle("open"); menu.classList.toggle("open"); };
+    menu.querySelectorAll("a").forEach(a => a.onclick = () => { burger.classList.remove("open"); menu.classList.remove("open"); });
+
+    // Active nav link
+    const links = [...menu.querySelectorAll("a")];
+    const sections = links.map(a => document.querySelector(a.getAttribute("href")));
+    const navObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          links.forEach(l => l.classList.toggle("active", l.getAttribute("href") === "#" + e.target.id));
+        }
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    sections.forEach(s => s && navObs.observe(s));
+
+    // Reveal on scroll
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add("in"); revealObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll(".reveal").forEach(el => revealObs.observe(el));
+
+    // Count-up numbers
+    const countObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target, target = +el.dataset.count, plain = el.dataset.plain;
+        const start = plain ? Math.max(target - 60, 0) : 0, dur = 1600, t0 = performance.now();
+        const tick = now => {
+          const p = Math.min((now - t0) / dur, 1), eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(start + (target - start) * eased) + (!plain && p === 1 && target >= 100 ? "+" : "");
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        countObs.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll("[data-count]").forEach(el => countObs.observe(el));
+  </script>
 </body>
 </html>
